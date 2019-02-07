@@ -1,0 +1,74 @@
+version: '2'
+
+services:
+  MySQL:
+    hostname: 'mysql'
+    image: mysql:5.7    
+    expose:
+      - "3306"
+#    volumes:
+#      - data_MySQL:/var/lib/mysql
+    networks: 
+      ReverseProxy:
+        ipv4_address: 172.0.0.10
+
+    environment:
+      MYSQL_ROOT_PASSWORD: 9rriyx
+      MYSQL_DATABASE: base
+      MYSQL_USER: phpmyadmin
+      MYSQL_PASSWORD: ne4cbm
+
+    container_name: MySQL
+
+    restart: always
+
+  phpmyadmin:
+    hostname: 'phpmyadmin'
+    image: phpmyadmin/phpmyadmin
+    expose:
+      - "80"
+    networks:
+      ReverseProxy:
+        ipv4_address: 172.0.0.11
+
+    environment: 
+      PMA_ARBITRARY: 1
+      MYSQL_ROOT_PASSWORD: 9rriyx
+
+    links: 
+      - MySQL:MySQL
+
+    container_name: PhpMyAdmin
+
+  # Adminer:
+  #   image: adminer
+      
+  #   expose:
+  #     - "8080"
+
+  #   networks: 
+  #     ReverseProxy:
+  #       ipv4_address: 172.0.0.11
+
+  #   environment:
+  #       - ADMINER_DESIGN=pepa-linha
+  #       - ADMINER_DEFAULT_SERVER=MySQL
+  #       - ADMINER_PLUGINS:dump-xml dump-json dump-php dump-date edit-calendar edit-foreign edit-textarea email-table enum-option frames json-column slugify 
+
+
+  #   links:
+  #     # for mysql container
+  #     - "MySQL:MySQL"
+
+  #   container_name: Adminer
+
+#volumes:
+#  data_MySQL:
+#    external: 
+#      name: mysql
+
+        
+networks: 
+  ReverseProxy:
+    external:
+      name: ProxyTargetNetwork

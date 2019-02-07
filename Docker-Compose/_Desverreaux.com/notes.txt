@@ -1,0 +1,31 @@
+There are various things that need to be done from within the container after it is created. 
+Eventually these actions can be written into a bash script and executed automatically,
+there are currently some issues with this approuch so they will have to be done manually.
+
+[DONE][this at least needs to be done] --- remove the line " include /etc/nginx/sites-enabled/*; " from 'etc/nginx/nginx.conf'
+[DONE][line above is obsolete once this change is incorporated] --- replace '/etc/nginx/nginx.conf' with 'C:/data/conf.d/ngixn.conf'  
+
+--- start the following services
+====== nginx
+====== php7.2-fpm 
+
+execute: composer global require laravel/installer 
+execute: export PATH=$PATH:~/.composer/vendor/bin
+
+--- add the line 
+------ "export PATH=$PATH:~/.composer/vendor/bin"
+------ to "~/.bashrc"
+
+execute: mkdir /var/www_temp/
+execute: cd /var/www_temp/
+execute: laravel new blog
+
+--- from within the server root directory execute 
+------ chown -R www-data ./bootstrap/cache
+------ chown -R www-data ./storage
+------ chown -R www-data ./public
+------ cp .env.example .env
+------ php artisan key:generate
+
+#!bin/bash 
+

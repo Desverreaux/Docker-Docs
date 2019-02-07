@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  Nginx:
+    hostname: 'Nginx'
+    container_name: 'Nginx'
+    image: desverreaux/nginx
+
+    volumes:
+      - C:/Repo/FreshLaravel:/var/www
+      - C:/Data/Nginx/conf.d:/etc/nginx/conf.d
+      - C:/Data/Nginx/logs:/logs
+
+    ports: 
+      - "80:80"
+
+    command: tail -f /etc/hosts
+
+    restart: always
+  

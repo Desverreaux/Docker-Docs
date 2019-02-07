@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  DevOps:
+    hostname: 'devops'
+    image: desverreaux/webserver:devops
+    expose:
+      - "80"
+    volumes:
+      - D:\ServerData\Desverreaux.com\DevOps:/var/www/DevOps/
+
+    networks:
+      ReverseProxy:
+        ipv4_address: 172.0.0.3 
+
+    command: tail -f /etc/hosts
+
+    container_name: DevOps
+
+    restart: always
+
+# volumes:
+#   data_DevOps:
+#     external:
+#       name: devops
+
+networks: 
+  ReverseProxy:
+    external:
+      name: ProxyTargetNetwork
