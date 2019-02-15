@@ -7,9 +7,13 @@ services:
     image: desverreaux/nginx
 
     volumes:
-      - C:/Repo/FreshLaravel:/var/www
-      - C:/Data/Nginx/conf.d:/etc/nginx/conf.d
-      - C:/Data/Nginx/logs:/logs
+      - /repo/Desverreaux.com:/var/www/Desverreaux.com
+      - /repo/FreshLaravel:/var/www/FreshLaravel
+      - /data/Nginx/conf.d:/etc/nginx/conf.d
+      - /data/Nginx/logs:/logs
+      # the next two lines are required if docker-compose is being called from a virtual box machine with shared folders
+      - /etc/passwd:/etc/passwd
+      - /etc/group:/etc/group/
 
     ports: 
       - "80:80"
@@ -17,4 +21,3 @@ services:
     command: tail -f /etc/hosts
 
     restart: always
-  
