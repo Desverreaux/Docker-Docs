@@ -1,18 +1,33 @@
 version: '3'
 
 services:
-  MySQL:
-    image: mariadb:10.0.38
-    hostname: MariaDB
+  # MySQL:
+  #   user: "root"
+  #   image: mariadb:10.0.38
+  #   hostname: MariaDB
 
-    container_name: 'MySQL'
+  #   container_name: 'MySQL'
     
-    ports:
-      - "3306:3306"
-    volumes:
-      - /data/mysql:/var/lib/mysql
-      - /logs/mysql:/var/log/mysql
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - /data/MySQL/database:/var/lib/mysql
+  #     - /data/MySQL/logs:/var/log/mysql
+  #     - ./ExternalFiles/config:/etc/mysql/conf.d
+  #     # - ./ExternalFiles/:/extra/
+  #     - /etc/passwd:/etc/passwd
+  #     - /etc/group:/etc/group/
 
+  #   # command: "/extra/FixVolumePermissions.sh"
+
+  #   # the environment section of the sql server only needs to exist if there isn't already data in the /data/mysql directory.
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD='9rriyx'
+  #     - MYSQL_DATABASE='Base'
+  #     - MYSQL_USER='dbuser'
+  #     - MYSQL_PASSWORD='ao8vjn'
+  
+  
   Adminer:
     image: adminer
     hostname: Adminer
@@ -20,19 +35,13 @@ services:
 
     environment:
         - ADMINER_DESIGN=pepa-linha
-        - ADMINER_DEFAULT_SERVER=MySQL
+        - ADMINER_DEFAULT_SERVER=35.174.2.84
         - ADMINER_PLUGINS:'dump-xml,dump-json,dump-php,dump-date,edit-calendar,edit-foreign,edit-textarea,email-table,enum-option,frames,json-column,slugify'
 
     ports:
       - "8080:8080"
 
 
-    # the environment section of the sql server only needs to exist if there isn't already data in the /data/mysql directory.
-    # environment:
-    #   - MYSQL_ROOT_PASSWORD='9rriyx'
-    #   - MYSQL_DATABASE='Base'
-    #   - MYSQL_USER='dbuser'
-    #   - MYSQL_PASSWORD='ao8vjn'
             
   # [2/14/2019] -- PMA container isn't acknowleging the dns resolution that docker should be 
   # -- doing from inside the host, Adminer is though so im just going to use that for now

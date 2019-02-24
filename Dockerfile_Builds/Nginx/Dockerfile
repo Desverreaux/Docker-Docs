@@ -70,7 +70,7 @@
 
 
 #copies external scripts into the container
-    COPY [ "./external_files/start.sh", "/docker/start.sh" ]
+    # COPY ./external_files /docker
     COPY ./external_files/nginx.conf /etc/nginx/
 
 #creates new laravel project

@@ -1,12 +1,15 @@
 version: '3'
 
 services:
-  Nginx:
-    hostname: 'Nginx'
-    container_name: 'Nginx'
-    image: desverreaux/nginx
+  nginx:
+    image: nginx:latest
+    hostname: Nginx
+    container_name: Nginx
 
-    volumes:
+    ports: 
+      - "80:80"
+
+    volumes: 
       - /repo/Desverreaux.com:/var/www/Desverreaux.com
       - /repo/FreshLaravel:/var/www/FreshLaravel
       - /data/Nginx/conf.d:/etc/nginx/conf.d
@@ -15,9 +18,31 @@ services:
       - /etc/passwd:/etc/passwd
       - /etc/group:/etc/group/
 
-    ports: 
-      - "80:80"
-
-    command: tail -f /etc/hosts
+  fpm:
+    image: nanoninja/php-fpm:7.2
+    hostname: Php7.2-fpm
+    container_name: Php
 
     restart: always
+  
+    volumes:
+      - /data/Php-FPM/config:/usr/local/etc/php/conf.d"
+      - /repo/Desverreaux.com:/var/www/Desverreaux.com
+      # the next two lines are required if docker-compose is being called from a virtual box machine with shared folders
+      - /etc/passwd:/etc/passwd
+      - /etc/group:/etc/group/
+
+    expose:
+      - "9000"
+  
+  # # Try to use composer from the docker host, if this doesn't work just use the following docker container that should work 
+  # composer:
+  #   image: "composer"
+  #   hostname: Composer
+  #   container_name: Composer
+  #   volumes:
+  #     - "/repo/Desverreaux.com:/var/www/Desverreaux.com"
+  #     # the next two lines are required if docker-compose is being called from a virtual box machine with shared folders
+  #     - /etc/passwd:/etc/passwd
+  #     - /etc/group:/etc/group/
+  #   command: install

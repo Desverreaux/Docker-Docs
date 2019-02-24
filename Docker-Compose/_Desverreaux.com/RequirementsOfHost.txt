@@ -1,0 +1,20 @@
+The following file structure must be present in the host machine for the compose file to map volumes correctly 
+--/repo
+----/Desverreaux.com
+--/data
+----/Nginx
+------/conf.d
+------/logs
+
+The following files must be present in the external files section 
+
+[none as of 2/23/2019]
+
+
+The following packages are installed in the docker host machine
+
+php7.2 [must add apt-repository ppa:ondrej/php first]
+
+go to https://getcomposer.org/download/
+then on the dockerhost execute the following 
+sudo php composer-setup.php --install-dir=/usr/local/bin
